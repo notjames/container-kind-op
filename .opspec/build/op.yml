@@ -1,0 +1,31 @@
+---
+name: build
+description: Build KinD
+inputs:
+  imageName:
+    string:
+      description: Image Name
+      default: "ci-kind:latest"
+  dockerfile:
+    file:
+      description: KinD Dockerfile
+      default: Dockerfile
+  dockerSocket:
+    socket:
+      description: "The path to host machine's docker.sock"
+run:
+  serial:
+  - op:
+      ref: github.com/opspec-pkgs/docker.build.localimage#1.0.0
+      inputs:
+        dockerfile: $(dockerfile)
+        dockerSocket:
+        imageName: $(imageName)
+#  - op:
+#      ref: github.com/opspec-pkgs/docker.image.push#2.1.0
+#      inputs:
+#        imageName: $(imageName)
+#        password:
+#        username:
+#        # params w/ default
+#        registry:
